@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
         fetch('books.json') 
             .then(response => response.json())
             .then(books => {
-                console.log(books)
+                
                 const mostRecentBook = findMostRecentBook(books);
                 
                 // 🪲 Bug: Incorrect element ID
@@ -12,16 +12,37 @@ document.addEventListener("DOMContentLoaded", () => {
             });
     });
 
+    function findMostRecentBook(books) {
+        // 🪲 Bug: Logic error
+        return books.reduce((mostRecent, book) => new Date(book.published) > new Date(mostRecent.published) ? book : mostRecent);
+    }
+
     
 
     document.getElementById("solveRoom2").addEventListener("click", () => {
         const jsConcepts = new Set(['closure', 'scope', 'hoisting']);
         // 🪲 Bug: What's mssing from JS concepts?
+        jsConcepts.add('async');
         const reactConcepts = new Set(['components', 'jsx', 'hooks', 'async']);
         // 🪲 Bug: Incorrect function call
+        
         const commonConcepts = findIntersection(jsConcepts, reactConcepts);
+
+        
         document.getElementById("room2Result").textContent = `The code to unlock the door is: ${Array.from(commonConcepts).join(', ')}`;
     });
+
+    function findIntersection(setA, setB) {
+        // 🪲 Bug: Incorrect logic
+        const intersection = new Set();
+        setA.forEach(item => {
+            if(setB.has(item)) {
+                intersection.add(item)
+            }
+        })
+        
+        return intersection ;
+    }
 
     // 🪲 Bug: Asynchronous function ?
     document.getElementById("solveRoom3").addEventListener("click", () => {
@@ -37,16 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-function findMostRecentBook(books) {
-    // 🪲 Bug: Logic error
-    return books.reduce((mostRecent, book) => new Date(book.published) > new Date(mostRecent.published) ? book : mostRecent);
-}
 
-function findIntersection(setA, setB) {
-    // 🪲 Bug: Incorrect logic
-    const intersection = new Set([...setA]);
-    return intersection;
-}
+
+
 
 async function navigateLabyrinth(directions) {
     for (let direction of directions) {
