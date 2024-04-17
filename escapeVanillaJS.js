@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
         // 🪲 Bug: Incorrect logic
         let intersection = new Set();
         setA.forEach(item => {
-            if(setB.has(item)) //check if inside setB we have same item from SetB
+            if(setB.has(item)) //check if inside setB we have same item from SetA
                 intersection.add(item)
         });
         
